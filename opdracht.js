@@ -109,7 +109,7 @@ const superheroes = [
     ]
 
 
-/*
+
 //1
 const superheroNames = () => {
     return superheroes.map (superhero => superhero.name);
@@ -127,13 +127,13 @@ console.log("Superheroes under 190 pounds:",superheroLightWeight());
 //3
 const superheroesThatWeigh200Pounds = () => {
     return superheroes.filter (superhero => superhero.weight === "200")
-    .map (superhero => superhero.name)    
+    .map (superhero => superhero.name);  
 }
 console.log("Names of superheroes that weigh 200 pounds:",superheroesThatWeigh200Pounds());
 
-//4 deze goed checken
+//4 
 const ComicsFirstAppearences = () => {
-    return superheroes.map (superhero => superhero.first_appearance)
+    return superheroes.map (superhero => superhero.first_appearance);
 }
 
 console.log("All Comics where Superheroes made their first appearences:",ComicsFirstAppearences());
@@ -149,48 +149,84 @@ const superheroesThatArePublishedByMarvelComics = () => {
     .map (superhero => superhero.name)
 }
 
-console.log("Published by DC Comics:",superheroesThatArePublishedByDCComics());
-console.log("Published by Marvel Comics:",superheroesThatArePublishedByMarvelComics());
+console.log("Published by DC Comics:",superheroesThatArePublishedByDCComics(),
+"Published by Marvel Comics:",superheroesThatArePublishedByMarvelComics());
 
 
-//6 niet af check de oplossing
-const superWeight = function () {
-    return superheroes.filter (superhero => superhero.publisher === "DC Comics")
-    .map (superhero => superhero.weight);
-}
+//6
+const DCComics = superheroes.filter(superheroes => superheroes.publisher === "DC Comics");
 
-const combinedWeightDCComics = function () {
-    if {
-        superWeight.reduce ((accumulator, currentValue) => {
-       return accumulator + currentValue;
-        });
-         
-})
+const heroWeights = DCComics.map(superheroes => {
+    if (superheroes.weight !== "unknown") {
+      // de Hero weights zijn in de data opgenamen als strings, e.g: '40'
+      // Deze moet je even parsen naar een integer, zodat je er mee kunt rekenen.
+      return parseInt(superheroes.weight, 10);
+    } else {
+      // wanneer het gewicht dus "unknown" is, dan wil je het gewicht van 0 optellen.
+      return 0;
     }
+  });
+  
+  const addedWeightOfHeroes = heroWeights.reduce((accumulative, currentValue) => {
+    return accumulative + currentValue;
+  });
+  
+  console.log("Combined weight of superheroes from DC Comics:", addedWeightOfHeroes);
 
-console.log("Combined weight of superheroes from DC Comics:",combinedWeightDCComics);
+  //verkorte oplossing:
+  const addedWeightDC = DCComics.map(superheroes => {
+    return superheroes.weight !== "unknown" ? parseInt(superheroes.weight, 10) : 0;
+  }).reduce((accumulative, currentValue) => accumulative + currentValue);
 
-//7 niet af check de oplossing
-const superWeight = function () {
-    return superheroes.filter (superhero => superhero.publisher === "Marvel Comics")
-    .map (superhero => superhero.weight);
-}
+  console.log("Combined weight of superheroes from DC Comics:", addedWeightDC);
 
-const combinedWeightMarvelComics = function () {
-    if {
-        superWeight.reduce ((accumulator, currentValue) => {
-       return accumulator + currentValue;
-        });
-         
-})
+
+  //7
+const MarvelComics = superheroes.filter(superheroes => superheroes.publisher === "Marvel Comics");
+
+const heroWeightsMarvel = MarvelComics.map(superheroes => {
+    if (superheroes.weight !== "unknown") {
+      // de Hero weights zijn in de data opgenamen als strings, e.g: '40'
+      // Deze moet je even parsen naar een integer, zodat je er mee kunt rekenen.
+      return parseInt(superheroes.weight, 10);
+    } else {
+      // wanneer het gewicht dus "unknown" is, dan wil je het gewicht van 0 optellen.
+      return 0;
     }
+  });
+  
+  const addedWeightOfMarvelHeroes = heroWeightsMarvel.reduce((accumulative, currentValue) => {
+    return accumulative + currentValue;
+  });
+  
+  console.log("Combined weight of superheroes from Marvel Comics:", addedWeightOfMarvelHeroes);
 
-console.log("Combined weight of superheroes from Marvel Comics:",combinedWeightMarvelComics);
+  //verkorte oplossing:
+  const addedWeightMarvel = MarvelComics.map(superheroes => {
+    return superheroes.weight !== "unknown" ? parseInt(superheroes.weight, 10) : 0;
+  }).reduce((accumulative, currentValue) => accumulative + currentValue);
 
-*/
+  console.log("Combined weight of superheroes from Marvel Comics:", addedWeightMarvel);
+  
 
-//8 niet af check de oplossing
-const heaviestSuperhero = function () {
-    superheroes.map (superhero => superhero.weight);
-    return 
-}
+// 8 Bonus: vind de zwaarste superheld!
+// First cast all values to a number or 0 if unknown
+const allHeroes = superheroes.map(hero => {
+    const weight = hero.weight !== "unknown" ? parseInt(hero.weight) : 0;
+    hero.weight = weight;
+    return hero;
+  });
+  // next, use reduce to find the largest value
+  const heaviestHero = allHeroes.reduce(
+    (currentHeaviestHero, currentHero) => {
+      if (currentHero.weight > currentHeaviestHero.weight) {
+        return currentHero;
+      } else {
+        return currentHeaviestHero;
+      }
+    },
+    allHeroes[0]
+    // met deze laatste waarde geef je aan wat de initiele waarde moet zijn van de functie
+  );
+  
+  console.log("Heaviest her0000o:", heaviestHero);
